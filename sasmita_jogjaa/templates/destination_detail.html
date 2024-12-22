@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Destination Details - Jogja Explore{% endblock %}
+{% block content %}
+<div class="card mb-4">
+    <img src="{{ destination.image_url }}" class="card-img-top" alt="{{ destination.name }}">
+    <div class="card-body">
+        <h5 class="card-title">{{ destination.name }}</h5>
+        <p class="card-text">{{ destination.description }}</p>
+        <a href="{{ destination.google_maps_url }}" target="_blank" class="btn btn-secondary">View on Google Maps</a>
+    </div>
+</div>
+<h3>Reviews</h3>
+<div class="list-group">
+    {% for review in reviews %}
+    <div class="list-group-item">
+        <p>{{ review.review_text }}</p>
+        {% if review.image_url %}
+        <img src="{{ review.image_url }}" alt="Review Image" class="img-fluid">
+        {% endif %}
+    </div>
+    {% else %}
+    <p>No reviews yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

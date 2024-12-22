@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Home - Jogja Explore{% endblock %}
+{% block content %}
+<header class="hero">
+    <div class="overlay">
+        <h1>Explore Jogja</h1>
+        <div class="search-bar">
+            <form action="/" method="get">
+                <input type="text" name="search" placeholder="Search destinations...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</header>
+<div class="mt-5">
+    <h2>Destinations</h2>
+    <div class="row">
+        {% for destination in destinations %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ destination.image_url }}" class="card-img-top" alt="{{ destination.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ destination.name }}</h5>
+                    <p class="card-text">{{ destination.description }}</p>
+                    <a href="/destination/{{ destination.id }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2>Destinations</h2>
+    <div class="row">
+        {% for destination in destinations %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ destination.image_url }}" class="card-img-top" alt="{{ destination.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ destination.name }}</h5>
+                    <p class="card-text">{{ destination.description }}</p>
+                    <a href="/destination/{{ destination.id }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2>Recent Reviews</h2>
+    <div class="row">
+        {% for review in reviews %}
+        <div class="col-md-3">
+            <div class="card mb-4">
+                {% if review.image_url %}
+                <img src="{{ review.image_url }}" class="card-img-top" alt="Review Image">
+                {% endif %}
+                <div class="card-body">
+                    <p class="card-text">{{ review.review_text }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
