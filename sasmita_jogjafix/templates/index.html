@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+/* Gaya untuk video */
+#background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Menutupi seluruh area tanpa merusak proporsi */
+    z-index: -1; /* Pastikan video berada di bawah konten */
+}
+
+/* Gaya untuk konten hero */
+.hero {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Memberikan efek transparan */
+    padding: 50px 0;
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+/* Menghilangkan latar belakang dari form */
+.hero form {
+    display: inline-block;
+    background: transparent; /* Membuat latar belakang transparan */
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: none; /* Menghilangkan bayangan */
+}
+
+.hero input[type="text"] {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 1rem;
+    background: transparent; /* Membuat input transparan */
+}
+
+.hero button {
+    background-color: transparent; /* Membuat tombol transparan */
+    color: white;
+    padding: 5px 10px;  /* Menyesuaikan ukuran tombol dengan teks */
+    border: 1px solid white; /* Membuat garis tombol putih */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center; /* Menjaga teks tetap rata tengah */
+    transition: all 0.3s ease;
+}
+
+.hero button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Efek hover dengan transparansi */
+    border-color: #ffffff; /* Menjaga garis putih saat hover */
+}
+
+/* Gaya untuk gambar destinasi */
+img.destination-image {
+    width: 300px;  /* Lebar gambar tetap */
+    height: 200px; /* Tinggi gambar tetap */
+    object-fit: cover; /* Memastikan gambar tetap proporsional tanpa distorsi */
+    border-radius: 10px; /* Sudut gambar melengkung */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan lembut */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img.destination-image:hover {
+    transform: scale(1.05); /* Efek zoom saat hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Pertegas bayangan saat hover */
+}
+
+/* Kontainer untuk destinasi */
+.destinations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+/* Kontainer untuk tombol */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Spasi antar tombol */
+    margin-top: 10px;
+    margin-bottom: 15px; /* Jarak dengan elemen bawah */
+}
+
+.button-background {
+    display: inline-block;
+    padding: 20px; /* Ruang di sekitar tombol */
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efek bayangan pada background */
+    transition: all 0.3s ease;
+}
+
+.button-background:hover {
+    transform: scale(1.05); /* Perbesar background saat hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Bayangan lebih dalam */
+}
+
+/* Edit Button */
+.btn-edit {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #4CAF50; /* Warna hijau */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-edit:hover {
+    background-color: #45a049; /* Warna hijau sedikit lebih gelap */
+    transform: scale(1.05); /* Efek perbesaran saat hover */
+}
+
+.btn-delete {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #f44336; /* Warna merah */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #e53935; /* Warna merah lebih gelap */
+    transform: scale(1.05); /* Efek perbesaran saat hover */
+}
+</style>
+
+<div class="hero">
+    <!-- Video sebagai background -->
+    <video id="background-video" autoplay muted loop>
+        <source src="{{ url_for('static', filename='videos/1226.mp4') }}" type="video/mp4">
+        <source src="{{ url_for('static', filename='videos/0603(1).webm') }}" type="video/webm">
+        <source src="{{ url_for('static', filename='videos/0603(1).ogg') }}" type="video/ogg">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Konten Hero -->
+    <h1>EXPLORE JOGJA</h1>
+    <!-- Form pencarian satu bar saja -->
+    <form id="search-form" action="" method="GET">
+        <input type="text" name="query" id="search-input" placeholder="Search">
+        <button type="submit">ENTER</button>
+    </form>
+</div>
+
+<h2>Destinations</h2>
+<div class="destinations">
+    {% for destination in destinations %}
+    <div class="destination">
+        <h3>{{ destination[1] }}</h3>
+        <p><strong>Lokasi:</strong> {{ destination[2] }}</p>
+        <p><strong>Jam Buka:</strong> {{ destination[4] }}</p>
+        <p>{{ destination[3] }}</p>
+        <img src="{{ destination[5] if destination[5] else 'https://via.placeholder.com/300x200' }}" 
+             alt="Image of {{ destination[1] }}" class="destination-image">
+        {% if logged_in %}
+        <div class="btn-container">
+            <div class="button-background">
+                <form action="{{ url_for('delete_review', id=destination[0]) }}" method="POST">
+                    <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </div>
+            <div class="button-background">
+                <a href="{{ url_for('edit_review', id=destination[0]) }}" class="btn-edit">Edit</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.getElementById('search-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Mencegah form submit biasa
+        
+        const query = document.getElementById('search-input').value;
+        fetch(`/search?query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                const destinationContainer = document.querySelector('.destinations');
+                destinationContainer.innerHTML = ''; // Kosongkan hasil sebelumnya
+                
+                data.destinations.forEach(destination => {
+                    const destinationElement = `
+                        <div class="destination">
+                            <h3>${destination.nama}</h3>
+                            <p><strong>Lokasi:</strong> ${destination.lokasi}</p>
+                            <p><strong>Jam Buka:</strong> ${destination.jam_buka}</p>
+                            <p>${destination.deskripsi}</p>
+                            <img src="${destination.image_url || 'https://via.placeholder.com/300x200'}" 
+                                 alt="Image of ${destination.nama}" class="destination-image">
+                        </div>
+                    `;
+                    destinationContainer.insertAdjacentHTML('beforeend', destinationElement);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Review</h2>
+<form method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ destination[1] }}" required>
+    
+    <label>Location:</label>
+    <input type="text" name="location" value="{{ destination[2] }}" required>
+    
+    <label>Description:</label>
+    <textarea name="description" required>{{ destination[3] }}</textarea>
+    
+    <label>Opening Hours:</label>
+    <input type="text" name="opening_hours" value="{{ destination[4] }}" required>
+    
+    <label>Image URL:</label>
+    <input type="text" name="image_url" value="{{ destination[5] }}" required>
+    
+    <button type="submit">Update</button>
+</form>
+{% endblock %}

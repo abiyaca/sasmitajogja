@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add Review</h2>
+<form method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" required>
+    
+    <label>Location:</label>
+    <input type="text" name="location" required>
+    
+    <label>Description:</label>
+    <textarea name="description" required></textarea>
+    
+    <label>Opening Hours:</label>
+    <input type="text" name="opening_hours" required>
+    
+    <!-- Menambahkan input untuk gambar -->
+    <label>Image URL:</label>
+    <input type="text" name="image_url" required placeholder="Enter image URL">
+    
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
